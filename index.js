@@ -38,4 +38,4 @@ const makeCommits = (n) => {
   });
 };
 
-makeCommits(100);
+makeScheduledCommits("2025-07-10", "2025-08-12", 6);

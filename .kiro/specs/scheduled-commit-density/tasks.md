@@ -40,7 +40,7 @@
   - Add error handling for Git operations and file system operations
   - _Requirements: 3.4, 4.4_
 
-- [ ] 6. Update main execution to use scheduled commits
+- [x] 6. Update main execution to use scheduled commits
 
   - Replace the existing `makeCommits(100)` call with `makeScheduledCommits("2025-07-10", "2025-08-12", 6)`
   - Ensure the new function integrates properly with existing imports and dependencies
