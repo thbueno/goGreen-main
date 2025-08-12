@@ -2,7 +2,7 @@ import jsonfile from "jsonfile";
 import moment from "moment";
 import simpleGit from "simple-git";
 import random from "random";
-import { generateDateRange, createDailyCommits } from "./utils.js";
+import { generateDateRange, createDailyCommits, makeScheduledCommits } from "./utils.js";
 
 const path = "./data.json";
 

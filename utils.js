@@ -157,3 +157,47 @@ export const createDailyCommits = (baseDate, commitsPerDay, callback) => {
   // Start processing commits from index 0
   processCommit(0);
 };
+
+/**
+ * Create scheduled commits over a date range with specified commits per day
+ * @param {string} startDate - Start date in YYYY-MM-DD format
+ * @param {string} endDate - End date in YYYY-MM-DD format
+ * @param {number} commitsPerDay - Number of commits to create per day
+ * @throws {Error} If parameters are invalid
+ */
+export const makeScheduledCommits = (startDate, endDate, commitsPerDay) => {
+  // Input validation
+  if (!startDate || !endDate) {
+    throw new Error("Both start date and end date are required");
+  }
+
+  if (!Number.isInteger(commitsPerDay) || commitsPerDay <= 0) {
+    throw new Error("commitsPerDay must be a positive integer");
+  }
+
+  // Generate date range
+  const dateRange = generateDateRange(startDate, endDate);
+  console.log(`Creating ${commitsPerDay} commits per day for ${dateRange.length} days (${dateRange.length * commitsPerDay} total commits)`);
+
+  // Recursive function to process each date
+  const processDate = (dateIndex) => {
+    // Base case: all dates processed, perform final push
+    if (dateIndex >= dateRange.length) {
+      console.log("All commits created. Pushing to remote repository...");
+      return simpleGit().push();
+    }
+
+    // Get current date
+    const currentDate = dateRange[dateIndex];
+    console.log(`Processing date: ${currentDate.format('YYYY-MM-DD')} (${dateIndex + 1}/${dateRange.length})`);
+
+    // Create daily commits for current date
+    createDailyCommits(currentDate, commitsPerDay, () => {
+      // After daily commits are complete, process next date
+      processDate(dateIndex + 1);
+    });
+  };
+
+  // Start processing from the first date
+  processDate(0);
+};
